@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+
+.incidents-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+.incident-item{
+  width: 20%;
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px;
+}
