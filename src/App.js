@@ -2,27 +2,50 @@ import { useRef } from 'react';
 import { useState } from 'react';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIncidents } from './redux/reducer/incidents';
+import { setIncidents, setUsers, setCategories } from './redux/reducer/incidents';
 import { useEffect } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Divider, Input, Layout, Menu, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { Content, Header } from 'antd/es/layout/layout';
+import {  UsersPieChart } from './components/usersPieChart';
+import { CategoriesPieChart } from './components/categoriesPieChart';
 
 
 function App() {
+  
     const incidents = useSelector((state) => state.incidents.list);
     const dispatch = useDispatch();
 
     useEffect(() => {
+      
       fetch("https://66d3057f184dce1713cf0fd8.mockapi.io/bytemonk/incidents")
         .then((response) => response.json())
         .then((data) => {
-  
-          dispatch(setIncidents(data));
-          console.log(data);
+          const incidentsFromApi = data.map((incident) => {
+            return {
+              id: incident.id,
+              user: incident.user,
+              category: incident.category,
+              details: incident.category,
+              timestamp: incident.timestamp,
+              ipAddress: incident.ipAddress,
+            };
+          });
+          dispatch(setIncidents(incidentsFromApi));
+          const extractedUsers = data.map((incident) => incident.user);
+          const extractedCategories = data.map((incident) => incident.category);
+          const Users = [...new Set(extractedUsers)];
+          const Categories = [...new Set(extractedCategories)];
+          dispatch(setUsers(Users));
+          dispatch(setCategories(Categories));
+      
+          
+          
         });
+        
     }, []);
+
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -170,10 +193,9 @@ function App() {
     },
   ];
 
-  const [pieChartView, setPieChartView] = useState(false);
+  const [pieChartView, setPieChartView] = useState(true);
   function changeView(){
     setPieChartView(!pieChartView);
-    console.log(pieChartView);
   };
 
   
@@ -206,7 +228,14 @@ function App() {
             margin: '16px 32px',
             padding: '16px',
           }} columns={columns} dataSource={incidents} />)
-        : (<div>Pie chart</div>) }
+        : (<>
+        
+             <UsersPieChart />
+             <CategoriesPieChart />
+        </>
+        
+        
+        ) }
       
       </Content>
   

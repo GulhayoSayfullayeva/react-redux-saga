@@ -4,18 +4,22 @@ const incidentSlice = createSlice( {
     name: 'incidents',
     initialState: {
         list: [],
-        filter: ''
+        users: [],
+        categories: [],
     },
     reducers: {
         setIncidents: (state, action) => {
             state.list = action.payload;
         },
-        setFilter: (state, action) => {
-            state.filter = action.payload;
+        setUsers: (state, action) => {
+            state.users = action.payload;
+        },
+        setCategories: (state, action) => {
+            state.categories = action.payload;
         }
     }
 });
 
-export const { setIncidents, setFilter} = incidentSlice.actions;
+export const { setIncidents, setUsers, setCategories} = incidentSlice.actions;
 
 export default incidentSlice.reducer;

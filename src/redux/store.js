@@ -4,13 +4,13 @@ import incidentsSaga from "./incidentsSaga";
 import createSagaMiddleware from 'redux-saga';
 
 
-const sagaMiddlware = createSagaMiddleware();
+//const sagaMiddlware = createSagaMiddleware();
 
 
 export const store = configureStore({
     reducer: {incidents: incidentsReducer},
-    middleware: () => [sagaMiddlware]
+    //middleware: () => [sagaMiddlware]
 });
 
-sagaMiddlware.run(incidentsSaga);
+//sagaMiddlware.run(incidentsSaga);
 
