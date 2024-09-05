@@ -12,14 +12,16 @@ export const UsersPieChart = () => {
 
     useEffect(() => {
         setUsers(getData());
-      }, [`${users}`]);
+
+        
+      }, [`${allUsers}`]);
     
       const getData = () => {
         const type = '分类一';
         const data = allUsers.map((user) => {
           const value = incidents.filter((incident) => incident.user === user).length;
           return { type, user, value };
-          
+
         });
         
         return data;

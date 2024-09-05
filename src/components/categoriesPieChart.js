@@ -13,7 +13,7 @@ export const CategoriesPieChart = () => {
 
     useEffect(() => {  
       setCategories(getData());
-    }, [`${categories}`]);
+    }, [`${allCategories}`]);
   
     const getData = () => {
       const type = '其他';
